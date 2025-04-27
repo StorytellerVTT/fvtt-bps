@@ -112,7 +112,7 @@ function addSelectionListeners(messageid, html) {
             const message = game.messages.get(messageid);
             const linkedMessage = game.messages.get(message.flags.boulderparchmentscissors.linkedMessage);
             if (!linkedMessage.flags.boulderparchmentscissors.ready) {
-                socket.executeAsGM("updateMessageRPS", message.id, { content: "You chose <strong>" + selectedChoice + "</strong>! Waiting for " + linkedMessage.user.name + " to make their choice...", flags: { boulderparchmentscissors: { ready: true, choice: selectedChoice } } });
+                socket.executeAsGM("updateMessageBPS", message.id, { content: "You chose <strong>" + selectedChoice + "</strong>! Waiting for " + linkedMessage.user.name + " to make their choice...", flags: { boulderparchmentscissors: { ready: true, choice: selectedChoice } } });
             }
             else {
                 const linkedMessageChoice = linkedMessage.flags.boulderparchmentscissors.choice;
@@ -129,20 +129,20 @@ function addSelectionListeners(messageid, html) {
                     result += "<strong>" + linkedMessage.user.name + " won! </strong>";
                 }
                 ChatMessage.create({ speaker: { alias: "Boulder, Parchment, Shears!" }, content: `<div style="text-align: center;" class="chat-card"><header class="card-header flexrow"><h3>` + cardTitle + `</h3></header><section class="card-content">` + result + `</section></div>` })
-                socket.executeAsGM("deleteMessageRPS", message.id);
-                socket.executeAsGM("deleteMessageRPS", linkedMessage.id);
+                socket.executeAsGM("deleteMessageBPS", message.id);
+                socket.executeAsGM("deleteMessageBPS", linkedMessage.id);
             }
         })
     }
 }
 
 
-function deleteMessageRPS(messageid) {
+function deleteMessageBPS(messageid) {
     const message = game.messages.get(messageid);
     message.delete();
 }
 
-function startRPS(message) {
+function startBPS(message) {
     const activeUsers = game.users.filter(user => user.active && user.id !== message.user.id);
     if (activeUsers.length === 0) {
         ChatMessage.create({ speaker: { alias: "Boulder, Parchment, Shears!" }, content: "No other active users found.", whisper: [message.user.id] });
@@ -170,15 +170,15 @@ function startRPS(message) {
     ChatMessage.create({ speaker: { alias: "Boulder, Parchment, Shears!" }, content: contentHtml, whisper: [message.user.id] });
 }
 
-async function otherUserRPS(userid, message) {
+async function otherUserBPS(userid, message) {
     const initiatorsName = game.users.get(message.user).name;
     Hooks.once("createChatMessage", (msg) => {
-        socket.executeAsGM("updateMessageRPS", message._id, { content: "You're playing Boulder, Parchment, Shears with <strong>" + msg.user.name + "</strong>!\nMake your choice and click \"<strong>Shoot!</strong>\"\n" + game.messages.get(message._id).content, flags: { boulderparchmentscissors: { linkedMessage: msg.id, ready: false } } });
+        socket.executeAsGM("updateMessageBPS", message._id, { content: "You're playing Boulder, Parchment, Shears with <strong>" + msg.user.name + "</strong>!\nMake your choice and click \"<strong>Shoot!</strong>\"\n" + game.messages.get(message._id).content, flags: { boulderparchmentscissors: { linkedMessage: msg.id, ready: false } } });
     });
-    await ChatMessage.create({ speaker: { alias: "Boulder, Parchment, Shears!" }, content: "<strong>" + initiatorsName + "</strong> wants to play Boulder, Parchment, Shears with you!\nMake your choice and click \"<strong>Shoot!</strong>\"\n" + generateRPSButtons(250), whisper: [userid], flags: { boulderparchmentscissors: { linkedMessage: message._id, ready: false } } });
+    await ChatMessage.create({ speaker: { alias: "Boulder, Parchment, Shears!" }, content: "<strong>" + initiatorsName + "</strong> wants to play Boulder, Parchment, Shears with you!\nMake your choice and click \"<strong>Shoot!</strong>\"\n" + generateBPSButtons(250), whisper: [userid], flags: { boulderparchmentscissors: { linkedMessage: message._id, ready: false } } });
 }
 
-function generateRPSButtons(width) {
+function generateBPSButtons(width) {
     // Calculate the button size based on 30% of the width
     const buttonSize = `${(width * 0.3)}px`;
 
@@ -198,7 +198,7 @@ function generateRPSButtons(width) {
     return `<div style="${buttonsContainerStyle}">${boulderButton}${parchmentButton}${scissorsButton}</div>${shootButtonHtml}`;
 }
 
-function updateMessageRPS(messageid, updateObject) {
+function updateMessageBPS(messageid, updateObject) {
     const message = game.messages.get(messageid);
     message.update(updateObject);
 }
