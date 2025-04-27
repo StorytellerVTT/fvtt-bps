@@ -80,7 +80,7 @@ function addSelectionListeners(messageid, html) {
             // Disable boulder, enable Parchment and Shears
             boulderButton.disabled = true;
             parchmentButton.disabled = false;
-            scissorsButton.disabled = false;
+            shearsButton.disabled = false;
             shootButton.disabled = false;
             selectedChoice = "boulder";
             setSelectedChoiceBackgroundColor('boulder');
@@ -90,19 +90,19 @@ function addSelectionListeners(messageid, html) {
             // Disable Parchment, enable boulder and Shears
             boulderButton.disabled = false;
             parchmentButton.disabled = true;
-            scissorsButton.disabled = false;
+            shearsButton.disabled = false;
             shootButton.disabled = false;
             selectedChoice = "parchment";
             setSelectedChoiceBackgroundColor('Parchment');
         });
 
-        scissorsButton.addEventListener('click', () => {
+        shearsButton.addEventListener('click', () => {
             // Disable Shears, enable boulder and Parchment
             boulderButton.disabled = false;
             parchmentButton.disabled = false;
-            scissorsButton.disabled = true;
+            shearsButton.disabled = true;
             shootButton.disabled = false;
-            selectedChoice = "scissors";
+            selectedChoice = "shears";
             setSelectedChoiceBackgroundColor('Shears');
         });
     }
@@ -110,19 +110,19 @@ function addSelectionListeners(messageid, html) {
         shootButton.disabled = true;
         shootButton.addEventListener('click', () => {
             const message = game.messages.get(messageid);
-            const linkedMessage = game.messages.get(message.flags.boulderparchmentscissors.linkedMessage);
-            if (!linkedMessage.flags.boulderparchmentscissors.ready) {
-                socket.executeAsGM("updateMessageBPS", message.id, { content: "You chose <strong>" + selectedChoice + "</strong>! Waiting for " + linkedMessage.user.name + " to make their choice...", flags: { boulderparchmentscissors: { ready: true, choice: selectedChoice } } });
+            const linkedMessage = game.messages.get(message.flags.boulderparchmentshears.linkedMessage);
+            if (!linkedMessage.flags.boulderparchmentshears.ready) {
+                socket.executeAsGM("updateMessageBPS", message.id, { content: "You chose <strong>" + selectedChoice + "</strong>! Waiting for " + linkedMessage.user.name + " to make their choice...", flags: { boulderparchmentshears: { ready: true, choice: selectedChoice } } });
             }
             else {
-                const linkedMessageChoice = linkedMessage.flags.boulderparchmentscissors.choice;
+                const linkedMessageChoice = linkedMessage.flags.boulderparchmentshears.choice;
                 const messageChoice = selectedChoice
                 const cardTitle = message.user.name + " and " + linkedMessage.user.name + " played Boulder, Parchment, Shears!";
                 let result = message.user.name + " played <strong>" + messageChoice + "</strong>!<br><br>" + linkedMessage.user.name + " played <strong>" + linkedMessageChoice + "</strong>!<br><hr />";
                 if (messageChoice === linkedMessageChoice) {
                     result += "<strong>It's a tie!</strong>";
                 }
-                else if ((messageChoice === "scissors" && linkedMessageChoice === "parchment") || (messageChoice === "parchment" && linkedMessageChoice === "boulder") || (messageChoice === "boulder" && linkedMessageChoice === "scissors")) {
+                else if ((messageChoice === "shears" && linkedMessageChoice === "parchment") || (messageChoice === "parchment" && linkedMessageChoice === "boulder") || (messageChoice === "boulder" && linkedMessageChoice === "shears")) {
                     result += "<strong>" + message.user.name + " won! </strong>";
                 }
                 else {
@@ -173,9 +173,9 @@ function startBPS(message) {
 async function otherUserBPS(userid, message) {
     const initiatorsName = game.users.get(message.user).name;
     Hooks.once("createChatMessage", (msg) => {
-        socket.executeAsGM("updateMessageBPS", message._id, { content: "You're playing Boulder, Parchment, Shears with <strong>" + msg.user.name + "</strong>!\nMake your choice and click \"<strong>Shoot!</strong>\"\n" + game.messages.get(message._id).content, flags: { boulderparchmentscissors: { linkedMessage: msg.id, ready: false } } });
+        socket.executeAsGM("updateMessageBPS", message._id, { content: "You're playing Boulder, Parchment, Shears with <strong>" + msg.user.name + "</strong>!\nMake your choice and click \"<strong>Shoot!</strong>\"\n" + game.messages.get(message._id).content, flags: { boulderparchmentshears: { linkedMessage: msg.id, ready: false } } });
     });
-    await ChatMessage.create({ speaker: { alias: "Boulder, Parchment, Shears!" }, content: "<strong>" + initiatorsName + "</strong> wants to play Boulder, Parchment, Shears with you!\nMake your choice and click \"<strong>Shoot!</strong>\"\n" + generateBPSButtons(250), whisper: [userid], flags: { boulderparchmentscissors: { linkedMessage: message._id, ready: false } } });
+    await ChatMessage.create({ speaker: { alias: "Boulder, Parchment, Shears!" }, content: "<strong>" + initiatorsName + "</strong> wants to play Boulder, Parchment, Shears with you!\nMake your choice and click \"<strong>Shoot!</strong>\"\n" + generateBPSButtons(250), whisper: [userid], flags: { boulderparchmentshears: { linkedMessage: message._id, ready: false } } });
 }
 
 function generateBPSButtons(width) {
@@ -190,12 +190,12 @@ function generateBPSButtons(width) {
                     justify-content: center; /* Center horizontally */
                 `;
 
-    const boulderButton = `<button class="bpsButton" data-choice="Boulder" style="${buttonStyle} background-image: url(modules/boulderparchmentscissors/vectors/Boulder.png);"></button>`;
-    const parchmentButton = `<button class="bpsButton" data-choice="Parchment" style="${buttonStyle} background-image: url(modules/boulderparchmentscissors/vectors/Parchment.png);"></button>`;
-    const scissorsButton = `<button class="bpsButton" data-choice="Shears" style="${buttonStyle} background-image: url(modules/boulderparchmentscissors/vectors/Shears.png);"></button>`;
+    const boulderButton = `<button class="bpsButton" data-choice="Boulder" style="${buttonStyle} background-image: url(modules/boulderparchmentshears/vectors/Boulder.png);"></button>`;
+    const parchmentButton = `<button class="bpsButton" data-choice="Parchment" style="${buttonStyle} background-image: url(modules/boulderparchmentshears/vectors/Parchment.png);"></button>`;
+    const shearsButton = `<button class="bpsButton" data-choice="Shears" style="${buttonStyle} background-image: url(modules/boulderparchmentshears/vectors/Shears.png);"></button>`;
     const shootButtonHtml = `<div><button class="bpsShootButton"><strong>Shoot!</strong></button></div>`;
     // Combine the buttons within a container div
-    return `<div style="${buttonsContainerStyle}">${boulderButton}${parchmentButton}${scissorsButton}</div>${shootButtonHtml}`;
+    return `<div style="${buttonsContainerStyle}">${boulderButton}${parchmentButton}${shearsButton}</div>${shootButtonHtml}`;
 }
 
 function updateMessageBPS(messageid, updateObject) {
