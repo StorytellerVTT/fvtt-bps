@@ -1,33 +1,17 @@
 {
-  "title": "Boulder, Parchment, Shears!",
-  "description": "Play boulder, parchment, shears with another user!",
-  "version": "1.0.0",
-  "scripts": ["bps.js"],
-  "socket": true,
-  "url": "https://github.com/StorytellerVTT/fvtt-bps",
-  "manifest": "https://github.com/StorytellerVTT/fvtt-bps/releases/latest/download/module.json",
-  "download": "https://github.com/StorytellerVTT/fvtt-bps/releases/download/1.0.0/boulderparchmentshears.zip",
-  "readme": "https://github.com/StorytellerVTT/fvtt-bps/blob/main/README.md",
-  "id": "boulderparchmentshears",
-  "authors": [
-    {
-      "name": "StorytellerVTT","loki123",
-      "discord": "StorytellerVTT", "loki123"
-    }
-  ],
+  "name": "boulder-parchment-shears",
+  "title": "Boulder Parchment Shears PvP",
+  "description": "Challenge another player to Boulder, Parchment, Shears in Foundry VTT!",
+  "author": "StorytellerVTT",
+  "version": "2.0.0",
   "compatibility": {
-    "verified": "11"
+    "minimum": "10",
+    "verified": "11",
+    "maximum": "12"
   },
-  "relationships": {
-    "requires": [
-      {
-        "id": "socketlib",
-        "type": "module",
-        "manifest": "https://raw.githubusercontent.com/manuelVo/foundryvtt-socketlib/master/module.json",
-        "compatibility": {
-          "verified": "1.0.13"
-        }
-      }
-    ]
-  }
+  "scripts": [
+    "bps.js"
+  ],
+  "manifest": "https://raw.githubusercontent.com/StorytellerVTT/fvtt-bps/main/module.json",
+  "download": "https://github.com/StorytellerVTT/fvtt-bps/archive/refs/heads/main.zip"
 }
