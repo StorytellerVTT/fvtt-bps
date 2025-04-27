@@ -1,16 +1,57 @@
+# Boulder Parchment Shears (BPS) for Foundry VTT
 
+**Boulder Parchment Shears** is a lightweight mini-game module for [Foundry Virtual Tabletop](https://foundryvtt.com/).  
+Challenge another player to a quick game of Boulder (🪨), Parchment (📜), or Shears (✂️) — perfect for settling in-character disputes, making decisions, or just having fun!
 
-# Boulder, Parchment, Shears!
-A simple FoundryVTT module that allows two people to play Boulder, Parchment, Shears the Rock, Paper, Scissors clone with slightly alterated terminology as seen mediums such as in Critical Role.
-
-Requires socketlib and a GM to be online in the world.
-
-The first player must type `bps` in the chat.
-They will be greeted with a dropdown selection of every active user in the game world to play Boulder, Parchment, Shears with.
-
-Simply press Start to play! After doing so, both players will be greeted with a selection of: Boulder, Parchment, or Shears! Both players must click on **Shoot!** to finish the game!
-
-The results will be posted publicly.
 ---
-Original author did most of the work, if you want to donate give it to him.
-[![Buy Me a Coffee](https://az743702.vo.msecnd.net/cdn/kofi3.png?v=0)](https://ko-fi.com/loki123)
+
+## Features
+
+- 🎮 **Player vs Player Challenges** — select another active player to compete against.
+- 🎨 **Clickable Image UI** — pick your move by clicking on fantasy-themed images.
+- ⚡ **Quick and Easy** — type `bps` in chat to instantly start a challenge.
+- 📜 **Simple Setup** — no configuration required.
+
+---
+
+## Installation
+
+1. Open **Foundry VTT** and navigate to **"Add-on Modules"**.
+2. Click **"Install Module"**.
+3. Paste the following Manifest URL: https://raw.githubusercontent.com/StorytellerVTT/fvtt-bps/main/module.json
+5. Click **Install**.
+6. Activate the module in your **World Settings** under **Manage Modules**.
+
+---
+
+## Usage
+
+- Type `bps` into the Foundry chat and press Enter.
+- Choose a player to challenge from the popup.
+- Both players secretly pick **Boulder**, **Parchment**, or **Shears** by clicking an image.
+- Once both players have made their choice, the result will be announced in chat!
+
+---
+
+## Compatibility
+
+- **Minimum Core Version**: `10`
+- **Verified Core Version**: `11`
+- **Maximum Core Version**: `12`
+
+---
+
+## License
+
+This module is distributed under the [MIT License](LICENSE).
+
+---
+
+## Credits
+
+Created by **StorytellerVTT**.  
+Special thanks to FoundryVTT and loki123 for the original code, now fully revamped. 
+
+---
+
+Make important decisions in the most respectable way possible... with Boulder, Parchment, Shears!
