@@ -7,7 +7,6 @@ Challenge another player to a quick game of Boulder (🪨), Parchment (📜), or
 
 ## Features
 
-- 🎮 **Player vs Player Challenges** — select another active player to compete against.
 - 🎨 **Clickable Image UI** — pick your move by clicking on fantasy-themed images.
 - ⚡ **Quick and Easy** — type `bps` in chat to instantly start a challenge.
 - 📜 **Simple Setup** — no configuration required.
@@ -35,9 +34,7 @@ Challenge another player to a quick game of Boulder (🪨), Parchment (📜), or
 
 ## Compatibility
 
-- **Minimum Core Version**: `10`
-- **Verified Core Version**: `11`
-- **Maximum Core Version**: `12`
+- **Verified Core Version**: `13`
 
 ---
 
