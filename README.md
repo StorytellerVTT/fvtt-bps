@@ -34,7 +34,7 @@ Challenge another player to a quick game of Boulder (🪨), Parchment (📜), or
 
 ## Compatibility
 
-- **Verified Core Version**: `13`
+- **Verified Core Version**: `12`
 
 ---
 
